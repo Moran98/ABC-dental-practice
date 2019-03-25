@@ -1,0 +1,3 @@
+/tmp/ccuHOctw.o: In function `main':
+Source.cpp:(.text+0x67): undefined reference to `AddElementAtStart(node**)'
+collect2: error: ld returned 1 exit status
