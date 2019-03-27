@@ -6,6 +6,7 @@ int main()
 {
 
   int choice;
+  int pos;
   struct node* headPtr = NULL;
   struct node* tailPtr = NULL;
 
@@ -26,12 +27,31 @@ int main()
     {
       if(headPtr==NULL)
       {
+        system("clear");
         printf("There are no registered patients.\n");
       }
       else
       {
         DisplayList(headPtr);
       }
+    }
+
+    else if(choice == 3)
+    {
+      //PATIENTS DETAILS
+      //SEARCH PATIENT
+      displayPatientDetails();
+    }
+
+    else if(choice == 4)
+    {
+      //DELETE A PATIENT
+      printf("Please enter a postion to delete at :");
+      scanf("%d",&pos );
+
+      //Call delete at pos function
+      DeleteElementAtPos(headPtr, pos);
+
     }
     displayMenu();
     printf("Enter option : ");
@@ -58,7 +78,7 @@ void AddElementAtStart(struct node** top)
   printf("Please enter Patient surname\n");
   scanf("%s", newNode->lname);
 
-  printf("Please enter Patient DOB\n");
+  printf("Please enter Patient DOB (DD/MM/YY)\n");
   scanf("%d", &newNode->DOB);
 
   printf("Please enter Patient email\n");
@@ -78,6 +98,30 @@ void AddElementAtStart(struct node** top)
 
   newNode->NEXT = *top;
   *top = newNode;
+}
+
+void DeleteElementAtPos(struct node* top, int position)
+{
+	int i;
+	struct node* temp;
+	struct node* prev_temp;
+	struct node* newNode;
+
+	temp = top;
+
+  system("clear");
+  printf("Deleting Patient details...\n");
+  printf("---------------------------\n");
+	for (i = 0;i < position - 1;i++)
+	{
+		prev_temp = temp;
+		temp = temp->NEXT;
+	}
+
+
+	prev_temp->NEXT = temp->NEXT;
+	free(temp);
+
 }
 
 //
@@ -104,9 +148,24 @@ void displayMenu()
 void DisplayList(struct node* top)
 {
 	struct node* temp = top;
+
+  system("clear");
+
 	while (temp != NULL)
 	{
 		printf("Patients name : %s %s\n", temp->fname, temp->lname);
 		temp = temp->NEXT;
 	}
+}
+
+
+void displayPatientDetails(struct node* top)
+{
+  struct node* temp = top;
+
+  //SEARCH PPS NUMBER FOR USER DETAILS TO Display
+  // if/else
+  system("clear");
+  printf("Displaying patient %s %s Details.\n", temp->fname, temp->lname);
+  printf("DEBUG\n");
 }

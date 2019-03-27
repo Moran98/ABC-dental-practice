@@ -1,0 +1,19 @@
+/home/moran98/Documents/AdvancedC/ABC-dental/Source.cpp: In function ‘void AddElementAtStart(node**)’:
+/home/moran98/Documents/AdvancedC/ABC-dental/Source.cpp:76:29: warning: format ‘%s’ expects argument of type ‘char*’, but argument 2 has type ‘int’ [-Wformat=]
+   scanf("%s", newNode->fname);
+               ~~~~~~~~~~~~~~^
+/home/moran98/Documents/AdvancedC/ABC-dental/Source.cpp:79:29: warning: format ‘%s’ expects argument of type ‘char*’, but argument 2 has type ‘int’ [-Wformat=]
+   scanf("%s", newNode->lname);
+               ~~~~~~~~~~~~~~^
+/home/moran98/Documents/AdvancedC/ABC-dental/Source.cpp:85:29: warning: format ‘%s’ expects argument of type ‘char*’, but argument 2 has type ‘int’ [-Wformat=]
+   scanf("%s", newNode->email);
+               ~~~~~~~~~~~~~~^
+/home/moran98/Documents/AdvancedC/ABC-dental/Source.cpp:88:33: warning: format ‘%s’ expects argument of type ‘char*’, but argument 2 has type ‘int’ [-Wformat=]
+   scanf("%s", newNode->mobileNum);
+               ~~~~~~~~~~~~~~~~~~^
+/home/moran98/Documents/AdvancedC/ABC-dental/Source.cpp:91:33: warning: format ‘%s’ expects argument of type ‘char*’, but argument 2 has type ‘int’ [-Wformat=]
+   scanf("%s", newNode->nextOfkin);
+               ~~~~~~~~~~~~~~~~~~^
+/tmp/ccpDftaW.o: In function `main':
+Source.cpp:(.text+0xe0): undefined reference to `displayPatientDetails()'
+collect2: error: ld returned 1 exit status

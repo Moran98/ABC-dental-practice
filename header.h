@@ -47,5 +47,6 @@ int searchList(struct node* top, char searchID[10]);
 
 // FUNCTIONS
 void displayMenu();
+void displayPatientDetails();
 
 #endif
