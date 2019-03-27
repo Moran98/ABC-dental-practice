@@ -127,16 +127,7 @@ void DeleteElementAtPos(struct node* top, int position)
 //
 // MENU'S
 
-void displayMenu()
-{
-  printf("==============================\n");
-  printf("Welcome to ABC Dental Practice\n");
-  printf("==============================\n\n");
 
-  printf("1) Add a new Patient.\n");
-  printf("2) Display Patients.\n");
-
-}
 //
 //
 //
@@ -150,7 +141,7 @@ void DisplayList(struct node* top)
 
 	while (temp != NULL)
 	{
-		printf("Patients name : %s %s\n", temp->fname, temp->lname);
+	//	printf("Patients name : %s %s\n", temp->fname, temp->lname);
 		temp = temp->NEXT;
 	}
 }
@@ -163,6 +154,6 @@ void displayPatientDetails(struct node* top)
   //SEARCH PPS NUMBER FOR USER DETAILS TO Display
   // if/else
   system("clear");
-  printf("Displaying patient %s %s Details.\n", temp->fname, temp->lname);
+//  printf("Displaying patient %s %s Details.\n", temp->fname, temp->lname);
   printf("DEBUG\n");
 }
