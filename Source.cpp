@@ -60,7 +60,6 @@ int main()
 
   return 0;
 }
-
 //
 //
 //
@@ -123,7 +122,6 @@ void DeleteElementAtPos(struct node* top, int position)
 	free(temp);
 
 }
-
 //
 //
 //
@@ -139,7 +137,6 @@ void displayMenu()
   printf("2) Display Patients.\n");
 
 }
-
 //
 //
 //

@@ -49,4 +49,7 @@ int searchList(struct node* top, char searchID[10]);
 void displayMenu();
 void displayPatientDetails();
 
+//BMI Calculation
+void calculateBMI();
+
 #endif
