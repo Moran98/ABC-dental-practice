@@ -1,3 +1,11 @@
+#ifndef HEADER
+#define HEADER
+//
+//
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 //STRUCT
 struct node {
   char fname;
@@ -25,7 +33,6 @@ struct node {
 //FUNCTIONS
 int exitProgram(char choice);
 
-void AddElementAtStart(struct node** top);
 void AddElementAtEnd(struct node* top);
 void AddElementAtPos(struct node* top, int position);
 
@@ -37,3 +44,8 @@ void DeleteElementAtPos(struct node* top, int position);
 int Listlength(struct node* top);
 void DisplayList(struct node* top);
 int searchList(struct node* top, char searchID[10]);
+
+// FUNCTIONS
+void displayMenu();
+
+#endif
