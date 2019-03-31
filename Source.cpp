@@ -3,21 +3,21 @@
 int main()
 {
 	struct node* headPtr = NULL;
+  struct node* tailPtr = NULL;
+
 	int choice;
 	int position;
 
-
-
-  	printf("1) Please enter 1 to add a Patient\n2) Patient at end\n3) Display the list\n");
-  	printf("4) Please enter 4 to delete a Patient from start\n5) Please enter 5 to delete a Patient from the end\n");
-  	printf("6) Please enter 6 to add Patient at a position\n7) Please enter 7 to delete Patient at a position\n - 1 to exit\n");
-  	scanf("%d", &choice);
+  printf("1) Please enter 1 to add a Patient\n2) Patient at end\n3) Display the list\n");
+  printf("4) Please enter 4 to delete a Patient from start\n5) Please enter 5 to delete a Patient from the end\n");
+  printf("6) Please enter 6 to add Patient at a position\n7) Please enter 7 to delete Patient at a position\n - 1 to exit\n");
+  scanf("%d", &choice);
 
 	while (choice != -1)
 	{
 		if (choice == 1)
 		{
-			printf("Adding Patient at the start\n");
+			printf("Adding Patient at the start . . .\n");
 
 			AddElementAtStart(&headPtr);
 		}
@@ -93,14 +93,14 @@ int main()
 void AddElementAtStart(struct node** top)
 {
 	struct node* newNode;
-	char ID[10];
+	char PPS[20];
 
-	printf("Please enter the ID of the new student\n");
-	scanf("%s", ID);
+	printf("Please enter the PPS number of the new Patient\n");
+	scanf("%s", PPS);
 
-	if (searchList(*top, ID) == 1)
+	if (searchList(*top, PPS) == 1)
 	{
-		printf("Sorry the ID already exists\n");
+		printf("Sorry the PPS number already exists in the datatbase.\n");
 		return;
 	}
 
@@ -110,7 +110,7 @@ void AddElementAtStart(struct node** top)
   	printf("Please enter Patient name\n");
   	scanf("%s", newNode->name);
 
-  	strcpy(newNode->ID, ID);
+  	strcpy(newNode->ID, PPS);
 
   	printf("Please enter Patient age\n");
   	scanf("%d", &newNode->age);
@@ -130,6 +130,9 @@ void AddElementAtStart(struct node** top)
     printf("Please enter Patient height\n");
   	scanf("%f", &newNode->height);
 
+    printf("Do you smoke? (Y/N) :\n");
+    scanf("%s", &newNode->smoke);
+
 	newNode->NEXT = *top;
 	*top = newNode;
 }
@@ -140,7 +143,8 @@ void DisplayList(struct node* top)
 	struct node* temp = top;
 	while (temp != NULL)
 	{
-		printf("Student %s ID: %s Age: %d Average %f Email %s Mobile %s Weight %f Height %f\n", temp->name, temp->ID, temp->age, temp->average, temp->email, temp->mobile, temp->weight, temp->height);
+		printf("Student %s ID: %s Age: %d Average %f Email %s Mobile %s Weight %f Height %f\n Smoking status : %s\n", temp->name, temp->ID, temp->age, temp->average,
+     temp->email, temp->mobile, temp->weight, temp->height, temp->smoke);
 		temp = temp->NEXT;
 	}
 }

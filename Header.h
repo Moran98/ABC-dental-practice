@@ -16,6 +16,8 @@ struct node {
   char nextOfkin;
   float weight;
   float height;
+  char smoke;
+  char exercise;
 	int age;
 	char ID[10];
 	float average;
