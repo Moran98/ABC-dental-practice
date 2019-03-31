@@ -6,19 +6,20 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<conio.h>
 
 //STRUCT
 
 struct node {
 	char name[30];
 	char surname[30];
-  int PPS;
-  char gender;
-  char nextOfkin;
-  float weight;
-  float height;
-  char smoke;
-  char exercise;
+	int PPS;
+	char gender;
+	char nextOfkin;
+	float weight;
+	float height;
+	char smoke;
+	char exercise;
 	int age;
 	char ID[10];
 	float average;
@@ -40,6 +41,10 @@ void DeleteElementAtPos(struct node* top, int position);
 
 int Listlength(struct node* top);
 void DisplayList(struct node* top);
+
+//VALIDATIONS
 int searchList(struct node* top, char searchID[10]);
+int validEmail(char email[40]);
+
 
 #endif
