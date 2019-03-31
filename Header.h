@@ -11,6 +11,7 @@
 
 struct node {
 	char name[30];
+	char surname[30];
   int PPS;
   char gender;
   char nextOfkin;
