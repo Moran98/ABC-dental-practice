@@ -1,116 +1,300 @@
-#include "header.h"
-
-void AddElementAtStart(struct node** top);
+#include "Header.h"
 
 int main()
 {
+	struct node* headPtr = NULL;
+	int choice;
+	int position;
 
-  int choice;
-  int pos;
-  struct node* headPtr = NULL;
-  struct node* tailPtr = NULL;
 
-  displayMenu();
-  printf("Enter option : ");
-  scanf("%d",&choice );
 
-  while (choice!=-1) {
-    if(choice==1)
-    {
-      system("clear");
-      printf("Adding Patient....\n");
-      printf("------------------\n");
-      AddElementAtStart(&headPtr);
-    }
+  	printf("1) Please enter 1 to add a Patient\n2) Patient at end\n3) Display the list\n");
+  	printf("4) Please enter 4 to delete a Patient from start\n5) Please enter 5 to delete a Patient from the end\n");
+  	printf("6) Please enter 6 to add Patient at a position\n7) Please enter 7 to delete Patient at a position\n - 1 to exit\n");
+  	scanf("%d", &choice);
 
-    else if(choice==2)
-    {
-      if(headPtr==NULL)
-      {
-        system("clear");
-        printf("There are no registered patients.\n");
-      }
-      else
-      {
-        DisplayList(headPtr);
-      }
-    }
+	while (choice != -1)
+	{
+		if (choice == 1)
+		{
+			printf("Adding Patient at the start\n");
 
-    else if(choice == 3)
-    {
-      //PATIENTS DETAILS
-      //SEARCH PATIENT
-      displayPatientDetails();
-    }
+			AddElementAtStart(&headPtr);
+		}
+		else if (choice == 2)
+		{
+			printf("Adding element at the end\n");
+			if (headPtr == NULL)
+				AddElementAtStart(&headPtr);
+			else
+			{
+				AddElementAtEnd(headPtr);
+			}
+		}
+		else if (choice == 3)
+		{
+			printf("Display the list\n");
+			DisplayList(headPtr);
+		}
 
-    else if(choice == 4)
-    {
-      //DELETE A PATIENT
-      printf("Please enter a postion to delete at :");
-      scanf("%d",&pos );
+		else if (choice == 4)
+		{
+			DeleteElementAtStart(&headPtr);
+		}
 
-      //Call delete at pos function
-      DeleteElementAtPos(headPtr, pos);
+		else if (choice == 5)
+		{
+			if (Listlength(headPtr) == 1)
+				DeleteElementAtStart(&headPtr);
+			else
+			{
+				DeleteElementAtEnd(headPtr);
+			}
+		}
 
-    }
-    displayMenu();
-    printf("Enter option : ");
-    scanf("%d",&choice );
-  }
+		else if (choice == 6)
+		{
+			printf("Please enter the position\n");
+			scanf("%d", &position);
 
-  return 0;
+			if (position < 1 || position>Listlength(headPtr))
+				printf("You need to enter a number between 1 and %d\n", Listlength(headPtr));
+			else if (position == 1)
+				AddElementAtStart(&headPtr);
+			else
+				AddElementAtPos(headPtr, position);
+
+		}
+
+		else if (choice == 7)
+		{
+			printf("Please enter the position\n");
+			scanf("%d", &position);
+
+			if (position < 1 || position>Listlength(headPtr))
+				printf("You need to enter a number between 1 and %d\n", Listlength(headPtr));
+			else if (position == 1)
+				DeleteElementAtStart(&headPtr);
+			else
+				DeleteElementAtPos(headPtr, position);
+
+		}
+
+    	printf("1) Please enter 1 to add a Patient\n2) Patient at end\n3) Display the list\n");
+    	printf("4) Please enter 4 to delete a Patient from start\n5) Please enter 5 to delete a Patient from the end\n");
+    	printf("6) Please enter 6 to add Patient at a position\n7) Please enter 7 to delete Patient at a position\n - 1 to exit\n");
+    	scanf("%d", &choice);
+	}
+
+	return 0;
 }
-//
-//
-//
-// ADDING AND DELETING PATIENTS
+
 
 void AddElementAtStart(struct node** top)
 {
-  struct node* newNode;
+	struct node* newNode;
+	char ID[10];
 
-  newNode = (struct node*)malloc(sizeof(struct node));
+	printf("Please enter the ID of the new student\n");
+	scanf("%s", ID);
 
-  printf("Please enter Patient first name\n");
-  scanf("%s", newNode->fname);
+	if (searchList(*top, ID) == 1)
+	{
+		printf("Sorry the ID already exists\n");
+		return;
+	}
 
-  printf("Please enter Patient surname\n");
-  scanf("%s", newNode->lname);
+	newNode = (struct node*)malloc(sizeof(struct node));
 
-  printf("Please enter Patient DOB (DD/MM/YY)\n");
-  scanf("%d", &newNode->DOB);
 
-  printf("Please enter Patient email\n");
-  scanf("%s", newNode->email);
+  	printf("Please enter Patient name\n");
+  	scanf("%s", newNode->name);
 
-  printf("Please enter Patient mobile\n");
-  scanf("%s", newNode->mobileNum);
+  	strcpy(newNode->ID, ID);
 
-  printf("Please enter Patient next of kin\n");
-  scanf("%s", newNode->nextOfkin);
+  	printf("Please enter Patient age\n");
+  	scanf("%d", &newNode->age);
+
+  	printf("Please enter Patient grade\n");
+  	scanf("%f", &newNode->average);
+
+  	printf("Please enter Patient email\n");
+  	scanf("%s", newNode->email);
+
+  	printf("Please enter Patient mobile\n");
+  	scanf("%s", newNode->mobile);
+
+    printf("Please enter Patient weight\n");
+  	scanf("%f", &newNode->weight);
+
+    printf("Please enter Patient height\n");
+  	scanf("%f", &newNode->height);
+
+	newNode->NEXT = *top;
+	*top = newNode;
+}
+
+
+void DisplayList(struct node* top)
+{
+	struct node* temp = top;
+	while (temp != NULL)
+	{
+		printf("Student %s ID: %s Age: %d Average %f Email %s Mobile %s Weight %f Height %f\n", temp->name, temp->ID, temp->age, temp->average, temp->email, temp->mobile, temp->weight, temp->height);
+		temp = temp->NEXT;
+	}
+}
+
+void AddElementAtEnd(struct node* top)
+{
+	struct node* temp = top;
+	struct node* newNode;
+	char ID[10];
+
+	printf("Please enter the ID of the new student\n");
+	scanf("%s", ID);
+
+	if (searchList(top, ID) == 1)
+	{
+		printf("Sorry the ID already exists\n");
+		return;
+	}
+
+	while (temp->NEXT != NULL)
+	{
+		temp = temp->NEXT;
+	}
+
+	newNode = (struct node*)malloc(sizeof(struct node));
+
+	printf("Please enter student name\n");
+	scanf("%s", newNode->name);
+
+	strcpy(newNode->ID, ID);
+
+	printf("Please enter student age\n");
+	scanf("%d", &newNode->age);
+
+	printf("Please enter average grade\n");
+	scanf("%f", &newNode->average);
+
+	printf("Please enter student email\n");
+	scanf("%s", newNode->email);
+
+	printf("Please enter student mobile\n");
+	scanf("%s", newNode->mobile);
+
+	newNode->NEXT = NULL;
+	temp->NEXT = newNode;
+}
+
+void DeleteElementAtStart(struct node** top)
+{
+	struct node* temp;
+
+	temp = *top;
+
+	*top = temp->NEXT;
+
+	free(temp);
+}
+void DeleteElementAtEnd(struct node* top)
+{
+	struct node* temp;
+	struct node* prev_temp;
+
+	temp = top;
+
+	while (temp->NEXT != NULL)
+	{
+		prev_temp = temp;
+		temp = temp->NEXT;
+	}
+
+	prev_temp->NEXT = NULL;
+	free(temp);
+}
+
+int Listlength(struct node* top)
+{
+	struct node* temp;
+	int count = 0;
+	temp = top;
+
+	while (temp != NULL)
+	{
+		count++;
+		temp = temp->NEXT;
+	}
+
+	return count;
+}
+
+void AddElementAtPos(struct node* top, int position)
+{
+	int i;
+	struct node* temp;
+	struct node* prev_temp;
+	struct node* newNode;
+	char ID[10];
+
+	printf("Please enter the ID of the new student\n");
+	scanf("%s", ID);
+
+	if (searchList(top, ID) == 1)
+	{
+		printf("Sorry the ID already exists\n");
+		return;
+	}
+
+	temp = top;
+
+	for (i = 0;i < position - 1;i++)
+	{
+		prev_temp = temp;
+		temp = temp->NEXT;
+	}
+
+	newNode = (struct node*)malloc(sizeof(struct node));
+
+	printf("Please enter Patient name\n");
+	scanf("%s", newNode->name);
+
+	strcpy(newNode->ID, ID);
+
+	printf("Please enter Patient age\n");
+	scanf("%d", &newNode->age);
+
+	printf("Please enter Patient grade\n");
+	scanf("%f", &newNode->average);
+
+	printf("Please enter Patient email\n");
+	scanf("%s", newNode->email);
+
+	printf("Please enter Patient mobile\n");
+	scanf("%s", newNode->mobile);
 
   printf("Please enter Patient weight\n");
-  scanf("%f", &newNode->weight);
+	scanf("%f", &newNode->mobile);
 
   printf("Please enter Patient height\n");
-  scanf("%f", &newNode->height);
+	scanf("%f", &newNode->mobile);
 
-  newNode->NEXT = *top;
-  *top = newNode;
+
+	newNode->NEXT = temp;
+	prev_temp->NEXT = newNode;
 }
+
 
 void DeleteElementAtPos(struct node* top, int position)
 {
 	int i;
 	struct node* temp;
 	struct node* prev_temp;
-	struct node* newNode;
+//	struct node* newNode;
 
 	temp = top;
 
-  system("clear");
-  printf("Deleting Patient details...\n");
-  printf("---------------------------\n");
 	for (i = 0;i < position - 1;i++)
 	{
 		prev_temp = temp;
@@ -122,38 +306,22 @@ void DeleteElementAtPos(struct node* top, int position)
 	free(temp);
 
 }
-//
-//
-//
-// MENU'S
 
-
-//
-//
-//
-// DISPLAY LIST OF PATIENTS
-
-void DisplayList(struct node* top)
+int searchList(struct node* top, char searchID[10])
 {
+	int found = 0;
 	struct node* temp = top;
-
-  system("clear");
 
 	while (temp != NULL)
 	{
-	//	printf("Patients name : %s %s\n", temp->fname, temp->lname);
+		if (strcmp(temp->ID,searchID)==0)
+		{
+			found = 1;
+			return found;
+		}
+
 		temp = temp->NEXT;
 	}
-}
 
-
-void displayPatientDetails(struct node* top)
-{
-  struct node* temp = top;
-
-  //SEARCH PPS NUMBER FOR USER DETAILS TO Display
-  // if/else
-  system("clear");
-//  printf("Displaying patient %s %s Details.\n", temp->fname, temp->lname);
-  printf("DEBUG\n");
+	return found;
 }
