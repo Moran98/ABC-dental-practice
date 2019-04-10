@@ -11,7 +11,7 @@ int main()
 	char password[20];
 	char username[20];
 	char ch;
-	int i=0;
+	int i = 0;
 
 	printf("WELCOME TO ABC DENTAL PRACTICE LTD.\n");
 	printf("-----------------------------------\n\n");
@@ -133,7 +133,7 @@ void AddElementAtStart(struct node** top)
 {
 	struct node* newNode;
 	char PPS[20];
-	int emailConfirm=0;
+	int emailConfirm = 0;
 	char emailInput[30];
 
 	//clear screen
@@ -159,18 +159,38 @@ void AddElementAtStart(struct node** top)
 
 	strcpy(newNode->ID, PPS);
 
-	printf("Please enter Patient age\n");
-	scanf("%d", &newNode->age);
+	printf("Please enter Patient Year Born\n");
+	scanf("%d", &newNode->yearOfBirth);
 
-	printf("Please enter Patient grade\n");
-	scanf("%f", &newNode->average);
+	printf("Please enter Patient gender\n");
+	scanf("%s", &newNode->gender);
+
+	switch (newNode->gender)
+	{
+
+	case 'm':
+	case 'M':
+			newNode->gender = 'Male';
+			printf("Male.");
+			break;
+
+	case 'f':
+	case 'F':
+			printf("Female.");
+			break;
+
+	default:
+		printf("Gender not specified.\n");
+		break;
+	}
 
 	printf("Please enter Patient email\n");
 	scanf("%s", newNode->email);
 	/*VALIDATION OF EMAIL ADDRESS
 		Sending the input email from the struct node*
 		to the function validEmail which will return 1 if the
-		email address contains a '@'
+		email address contains a '@' and 5 if the email contains
+		an '@' and '.com'
 	*/
 	emailConfirm = validEmail(newNode->email);
 
@@ -183,14 +203,22 @@ void AddElementAtStart(struct node** top)
 	}
 
 
-	printf("Please enter Patient mobile\n");
-	scanf("%s", newNode->mobile);
+	printf("Please enter Patient Next of Kin Name\n");
+	scanf("%s", newNode->nextOfkin);
+
+	printf("Please enter Patient Last Appointment(Month)\n");
+	scanf("%s", newNode->lastApp);
+
 
 	printf("Please enter Patient weight\n");
 	scanf("%f", &newNode->weight);
 
 	printf("Please enter Patient height\n");
 	scanf("%f", &newNode->height);
+
+	printf("Does the Patient have any allergies (Y/N)\n");
+	scanf("%s", &newNode->allergies);
+
 
 	printf("Do you smoke? (Y/N) :\n");
 	scanf("%s", &newNode->smoke);
@@ -199,29 +227,29 @@ void AddElementAtStart(struct node** top)
 	{
 		int smokeChoice = 0;
 
-		printf("1) Do you smoke :\nLess than 10 a day?\n2)More than 10 a day?\n ");
+		printf("1) Do you smoke :\n1)Less than 10 a day.\n2)More than 10 a day.\n ");
 		scanf("%d", &smokeChoice);
 	}
 
 	printf("Do you drink Alcohol? (Y/N) :\n");
 	scanf("%s", &newNode->alcohol);
 	//IF FOR ALCOHOL ANS == Y
-	if (newNode->alcohol== 'y' || newNode->alcohol == 'Y')
+	if (newNode->alcohol == 'y' || newNode->alcohol == 'Y')
 	{
 		int alcoholChoice = 0;
 
-		printf("1) Do you smoke :\nLess than 10 a day?\n2)More than 10 a day?\n ");
+		printf("1) Do you Drink :\n1)None\n2)More than 10 units.\n3)Less than 10 units.\n ");
 		scanf("%d", &alcoholChoice);
 	}
 
 	printf("Do you Exercise? (Y/N) :\n");
 	scanf("%s", &newNode->exercise);
 	//IF FOR EXERCISE ANS == Y
-	if (newNode->exercise== 'y' || newNode->exercise == 'Y')
+	if (newNode->exercise == 'y' || newNode->exercise == 'Y')
 	{
 		int exerciseChoice = 0;
 
-		printf("1) Do you exercise :\nLess than twice a week?\n2)More than twice a week?\n ");
+		printf("1) Do you exercise :\n1)Less than twice a week?\n2)More than twice a week?\n ");
 		scanf("%d", &exerciseChoice);
 	}
 
@@ -242,9 +270,18 @@ void DisplayList(struct node* top)
 
 	while (temp != NULL)
 	{
-		printf("Patient %s %s\n---------------------\n PPS: %s\n Age: %d\n Average %f\n Email %s\n Mobile %s\n Weight %f\n Height %f\n", temp->name, temp->surname, temp->ID, temp->age, temp->average, temp->email, temp->mobile, temp->weight, temp->height);
-		printf(" Smoking status : %s\n ", &temp->smoke);
-		printf("Exercise status : %s \n\n", &temp->exercise);
+		printf("Patient %s %s\n---------------------\n", temp->name, temp->surname);
+		printf("Year of Birth : %d\n", temp->yearOfBirth);
+		printf("Email : %s\n", temp->email);
+		//printf("Gender : %s\n", temp->gender);
+		printf("Next of Kin : %s\n", temp->nextOfkin);
+		printf("Last Appointment : %s\n", temp->lastApp);
+		printf("Weight : %f`\n", temp->weight);
+		printf("Height : %f\n", temp->height);
+		printf("Smoking status : %s\n ", temp->smoke);
+		printf("Exercise status : %s\n", temp->exercise);
+		//printf("Drinking status : %s\n\n", temp->alcohol);
+
 
 		temp = temp->NEXT;
 	}
@@ -283,17 +320,20 @@ void AddElementAtEnd(struct node* top)
 
 	strcpy(newNode->ID, PPS);
 
-	printf("Please enter Patient age\n");
-	scanf("%d", &newNode->age);
+	printf("Please enter Patient Year Born\n");
+	scanf("%d", &newNode->yearOfBirth);
 
-	printf("Please enter Patient grade\n");
-	scanf("%f", &newNode->average);
+	printf("Please enter Patient gender\n");
+	scanf("%s", &newNode->gender);
 
 	printf("Please enter Patient email\n");
 	scanf("%s", newNode->email);
 
-	printf("Please enter Patient mobile\n");
-	scanf("%s", newNode->mobile);
+	printf("Please enter Patient Next of Kin Name\n");
+	scanf("%s", newNode->nextOfkin);
+
+	printf("Please enter Patient Last Appointment(Month)\n");
+	scanf("%s", newNode->lastApp);
 
 	printf("Please enter Patient weight\n");
 	scanf("%f", &newNode->weight);
@@ -392,17 +432,21 @@ void AddElementAtPos(struct node* top, int position)
 
 	strcpy(newNode->ID, PPS);
 
-	printf("Please enter Patient age\n");
-	scanf("%d", &newNode->age);
+	printf("Please enter Patient Year Born\n");
+	scanf("%d", &newNode->yearOfBirth);
 
-	printf("Please enter Patient grade\n");
-	scanf("%f", &newNode->average);
+	printf("Please enter Patient gender\n");
+	scanf("%s", &newNode->gender);
 
 	printf("Please enter Patient email\n");
 	scanf("%s", newNode->email);
 
-	printf("Please enter Patient mobile\n");
-	scanf("%s", newNode->mobile);
+
+	printf("Please enter Patient Next of Kin Name\n");
+	scanf("%s", newNode->nextOfkin);
+
+	printf("Please enter Patient Last Appointment(Month)\n");
+	scanf("%s", newNode->lastApp);
 
 	printf("Please enter Patient weight\n");
 	scanf("%f", &newNode->weight);
@@ -470,7 +514,7 @@ int searchList(struct node* top, char searchID[10])
 
 int validEmail(char email[40])
 {
-	int confirmation=0;
+	int confirmation = 0;
 	int length = strlen(email);
 
 	for (int i = 0; i < length; i++)
@@ -481,6 +525,7 @@ int validEmail(char email[40])
 			confirmation++;
 			break;
 		}
+	}
 
 		//searching for '.com' at pos [length-1,2,3,4]
 		if (email[length - 4] == '.')
@@ -504,5 +549,4 @@ int validEmail(char email[40])
 		}
 
 		return confirmation;
-	}
 }
