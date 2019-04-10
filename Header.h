@@ -20,6 +20,7 @@ struct node {
 	float height;
 	char smoke;
 	char exercise;
+	char alcohol;
 	int age;
 	char ID[10];
 	float average;

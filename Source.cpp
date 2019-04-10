@@ -203,6 +203,17 @@ void AddElementAtStart(struct node** top)
 		scanf("%d", &smokeChoice);
 	}
 
+	printf("Do you drink Alcohol? (Y/N) :\n");
+	scanf("%s", &newNode->alcohol);
+	//IF FOR ALCOHOL ANS == Y
+	if (newNode->alcohol== 'y' || newNode->alcohol == 'Y')
+	{
+		int alcoholChoice = 0;
+
+		printf("1) Do you smoke :\nLess than 10 a day?\n2)More than 10 a day?\n ");
+		scanf("%d", &alcoholChoice);
+	}
+
 	printf("Do you Exercise? (Y/N) :\n");
 	scanf("%s", &newNode->exercise);
 	//IF FOR EXERCISE ANS == Y
@@ -292,6 +303,9 @@ void AddElementAtEnd(struct node* top)
 
 	printf("Do you smoke? (Y/N) :\n");
 	scanf("%s", &newNode->smoke);
+
+	printf("Do you drink Alcohol? (Y/N) :\n");
+	scanf("%s", &newNode->alcohol);
 
 	printf("Do you Exercise? (Y/N) :\n");
 	scanf("%s", &newNode->exercise);
