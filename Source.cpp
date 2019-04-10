@@ -93,15 +93,8 @@ int main()
 
 		else if (choice == 6)
 		{
-			printf("Please enter the position\n");
-			scanf("%d", &position);
 
-			if (position < 1 || position>Listlength(headPtr))
-				printf("You need to enter a number between 1 and %d\n", Listlength(headPtr));
-			else if (position == 1)
-				AddElementAtStart(&headPtr);
-			else
-				AddElementAtPos(headPtr, position);
+
 
 		}
 
@@ -121,7 +114,7 @@ int main()
 
 		printf("1) Please enter 1 to add a Patient\n2) Patient at end\n3) Display the list\n");
 		printf("4) Please enter 4 to delete a Patient from start\n5) Please enter 5 to delete a Patient from the end\n");
-		printf("6) Please enter 6 to add Patient at a position\n7) Please enter 7 to delete Patient at a position\n - 1 to exit\n");
+		printf("6) Please enter 6 to Generate Statistics\n7) Please enter 7 to delete Patient at a position\n - 1 to exit\n");
 		scanf("%d", &choice);
 	}
 
@@ -210,14 +203,39 @@ void AddElementAtStart(struct node** top)
 	scanf("%s", newNode->lastApp);
 
 
-	printf("Please enter Patient weight\n");
+	printf("Please enter Patient weight(LBS)\n");
 	scanf("%f", &newNode->weight);
 
-	printf("Please enter Patient height\n");
+	printf("Please enter Patient height(CM)\n");
 	scanf("%f", &newNode->height);
 
+	//SENDING VARIABLES HEIGHT + WEIGHT TO BMI FUNCTION
+	BMI(newNode , newNode->weight, newNode->height);
+
+
 	printf("Does the Patient have any allergies (Y/N)\n");
-	scanf("%s", &newNode->allergies);
+	scanf("%s", allergyStat);
+/*
+	while ((allergyStat == 'y') || (allergyStat == 'Y') || (allergyStat == 'n') || (allergyStat == 'N'))
+	{
+		printf("Invalid entry \n");
+		printf("Does the Patient have any allergies (Y/N)\n");
+		scanf("%s", allergyStat);
+	}*/
+
+	if ((allergyStat == 'y' )|| (allergyStat == 'Y')) {
+		//COUNT WITH ALLERGIES
+		printf("Yes");
+	}
+
+	else if (allergyStat == 'n' || allergyStat == 'N') {
+		//COUNT ALL WITHOUT ALLERGY
+		printf("No");
+	}
+	else
+	{
+		printf("Invalid entry.");
+	}
 
 
 	printf("Do you smoke? (Y/N) :\n");
@@ -550,3 +568,79 @@ int validEmail(char email[40])
 
 		return confirmation;
 }
+
+//BMI CALCULATIONS
+/*
+	BMI = Weight/height*height
+*/
+float BMI(struct node* top,float w, float h)
+{
+	int i;
+	float bmi=0;
+	int c1, c2, c3, c4;
+	struct node* temp = top;
+
+	temp->BMI = (w*703) / (h * h);
+
+	printf("DEBUG - BMI is %f", temp->BMI);
+
+	if (bmi <= 18.5){
+		//bmi18(temp->BMI);
+	}
+	else if (bmi <= 25) {
+		c2++;
+	}
+	else if (bmi <= 30) {
+		c3++;
+	}
+	else if (bmi >= 30) {
+		c4++;
+	}
+
+	return temp->BMI;
+}
+
+
+//GENERATING STATISTICS
+/*
+	By using the totals from BMI's
+	this function will produce the statistics of
+	% patients with specific BMI's
+
+*/
+
+void GenerateStatistics(struct node* top,float w, float h)
+{
+
+	struct node* temp = top;
+
+	//clear screen
+	system("@cls||clear");
+
+	printf("1) % Patients with less than 18.5 BMI.\n");
+	printf("2) % Patients with less than 25 BMI.\n");
+	printf("3) % Patients with less than 30 BMI.\n");
+	printf("4) % Patients with greater tahn 30 BMI.\n");
+	printf("5) % Patients with less than 18.5 BMI.\n\n");
+
+	printf("i) How many cigarettes you smoke a day.\n");
+	printf("ii) How often do you exercise.\n");
+
+	printf("\nPlease enter an option : ");
+	scanf("%d", &statsChoice);
+
+	switch (statsChoice)
+	{
+
+	case 1:
+	default:
+		break;
+	}
+}
+// STATISTICS FUNCTIONS FOR BMI
+/*
+void bmi18(float bmi)
+{
+	printf("%f", bmi);
+}
+*/
