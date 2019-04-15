@@ -1,6 +1,6 @@
 # ABC Dental Practice LTD.
 
-Submission for Semester 3 Year 2 of Advanced Procedural Programming by Aaron Moran.
+Submission for Year 2 Semester 3 of Advanced Procedural Programming by Aaron Moran (G00356519).
 
 ## Overview
 
