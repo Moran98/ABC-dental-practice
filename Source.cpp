@@ -47,9 +47,9 @@ int main()
 
 
 	//MENU
-	printf("1) Add a Patient.\n2) Display all Patients details.\n3) Display a Patients details.\n");
-	printf("4) Update Patients details.\n5) Delete a Patient from the datatbase.\n");
-	printf("6) Generate Statistics.\n7) Print Patient details to report file.\nX) -1 to exit\n");
+	printf("1) Please enter 1 to add a Patient\n2) Patient at end\n3) Display the list\n");
+	printf("4) Update Patients details.\n5) Please enter 5 to delete a Patient from the end\n");
+	printf("6) Please enter 6 to Generate Statistics\n7) Please enter 7 to delete Patient at a position\n - 1 to exit\n");
 	scanf("%d", &choice);
 
 	while (choice != -1)
@@ -78,7 +78,7 @@ int main()
 
 		else if (choice == 4)
 		{
-			DeleteElementAtStart(&headPtr);
+			UpdateDetails(headPtr);
 		}
 
 		else if (choice == 5)
@@ -94,7 +94,7 @@ int main()
 		else if (choice == 6)
 		{
 
-
+			GenerateStatistics(headPtr);
 
 		}
 
@@ -113,7 +113,7 @@ int main()
 		}
 
 		printf("1) Please enter 1 to add a Patient\n2) Patient at end\n3) Display the list\n");
-		printf("4) Please enter 4 to delete a Patient from start\n5) Please enter 5 to delete a Patient from the end\n");
+		printf("4) Update Patients details.\n5) Please enter 5 to delete a Patient from the end\n");
 		printf("6) Please enter 6 to Generate Statistics\n7) Please enter 7 to delete Patient at a position\n - 1 to exit\n");
 		scanf("%d", &choice);
 	}
@@ -126,23 +126,24 @@ void AddElementAtStart(struct node** top)
 {
 	struct node* newNode;
 	char PPS[20];
+	int allergy = 0;
+	int noAllergy = 0;
 	int emailConfirm = 0;
 	char emailInput[30];
 
 	//clear screen
 	system("@cls||clear");
 
-	printf("Please enter the PPS number of the new Patient\n");
-	scanf("%s", PPS);
+	newNode = (struct node*)malloc(sizeof(struct node));
 
-	if (searchList(*top, PPS) == 1)
+	printf("Please enter the PPS number of the new Patient\n");
+	scanf("%d",PPS);
+
+	if (searchList(*top, newNode->PPS) == 1)
 	{
 		printf("Sorry the PPS number already exists in the datatbase.\n");
 		return;
 	}
-
-	newNode = (struct node*)malloc(sizeof(struct node));
-
 
 	printf("Please enter Patient name\n");
 	scanf("%s", newNode->name);
@@ -150,7 +151,7 @@ void AddElementAtStart(struct node** top)
 	printf("Please enter Patient surname\n");
 	scanf("%s", newNode->surname);
 
-	strcpy(newNode->ID, PPS);
+//	strcpy(newNode->ID, PPS);
 
 	printf("Please enter Patient Year Born\n");
 	scanf("%d", &newNode->yearOfBirth);
@@ -214,23 +215,16 @@ void AddElementAtStart(struct node** top)
 
 
 	printf("Does the Patient have any allergies (Y/N)\n");
-	scanf("%s", allergyStat);
-/*
-	while ((allergyStat == 'y') || (allergyStat == 'Y') || (allergyStat == 'n') || (allergyStat == 'N'))
-	{
-		printf("Invalid entry \n");
-		printf("Does the Patient have any allergies (Y/N)\n");
-		scanf("%s", allergyStat);
-	}*/
+	scanf("%s", newNode-allergy);
 
 	if ((allergyStat == 'y' )|| (allergyStat == 'Y')) {
 		//COUNT WITH ALLERGIES
-		printf("Yes");
+		allergy++;
 	}
 
 	else if (allergyStat == 'n' || allergyStat == 'N') {
 		//COUNT ALL WITHOUT ALLERGY
-		printf("No");
+		noAllergy++;
 	}
 	else
 	{
@@ -296,8 +290,9 @@ void DisplayList(struct node* top)
 		printf("Last Appointment : %s\n", temp->lastApp);
 		printf("Weight : %f`\n", temp->weight);
 		printf("Height : %f\n", temp->height);
-		printf("Smoking status : %s\n ", temp->smoke);
-		printf("Exercise status : %s\n", temp->exercise);
+		printf("Allergy status : %s\n ", temp->allergies);
+		//printf("Smoking status : %s\n ", temp->smoke);
+		//printf("Exercise status : %s\n", temp->exercise);
 		//printf("Drinking status : %s\n\n", temp->alcohol);
 
 
@@ -311,17 +306,8 @@ void AddElementAtEnd(struct node* top)
 {
 	struct node* temp = top;
 	struct node* newNode;
-	char PPS[10];
+	int PPS;
 
-	printf("Please enter the ID of the new student\n");
-	scanf("%s", PPS);
-
-
-	if (searchList(top, PPS) == 1)
-	{
-		printf("Sorry the ID already exists\n");
-		return;
-	}
 
 	while (temp->NEXT != NULL)
 	{
@@ -330,13 +316,25 @@ void AddElementAtEnd(struct node* top)
 
 	newNode = (struct node*)malloc(sizeof(struct node));
 
+	printf("Please enter the ID of the new student\n");
+	scanf("%d", PPS);
+
+
+	if (searchList(top, temp->PPS) == 1)
+	{
+		printf("Sorry the ID already exists\n");
+		return;
+	}
+
+	temp->PPS = PPS;
+
 	printf("Please enter Patient name\n");
 	scanf("%s", newNode->name);
 
 	printf("Please enter Patient surname\n");
 	scanf("%s", newNode->surname);
 
-	strcpy(newNode->ID, PPS);
+	//strcpy(temp->PPS, PPS);
 
 	printf("Please enter Patient Year Born\n");
 	scanf("%d", &newNode->yearOfBirth);
@@ -426,7 +424,7 @@ void AddElementAtPos(struct node* top, int position)
 	printf("Please enter the ID of the new student\n");
 	scanf("%s", PPS);
 
-	if (searchList(top, PPS) == 1)
+	if (searchList(top, temp->PPS) == 1)
 	{
 		printf("Sorry the ID already exists\n");
 		return;
@@ -505,20 +503,84 @@ void DeleteElementAtPos(struct node* top, int position)
 
 }
 
+//UPDATING DETAILS
+//
+//
+//
+void UpdateDetails(struct node* top) {
+
+	struct node* temp=top;
+	int ppsSearch=0;
+	char fnameSearch[30];
+	char snameSearch[30];
+	int searchChoice = 0;
+	int allergy = 0;
+	int noAllergy = 0;
+	int emailConfirm = 0;
+	char emailInput[30];
+
+	//clear screen
+	system("@cls||clear");
+
+	printf("1) Search by PPS.\n");
+	printf("2) Search by Full Name.\n");
+	scanf("%d", &searchChoice);
+
+	switch (searchChoice)
+	{
+	case 1:
+		printf("Enter the PPS to search\n");
+		scanf("%d", ppsSearch);
+		break;
+	case 2:
+		printf("Enter the name to search\n");
+		scanf("%s %s", fnameSearch, snameSearch);
+		break;
+
+	default:
+		break;
+	}
+	/*
+		Bug where i cannot access the while loop.
+
+	*/
+
+	while (temp != NULL)
+	{
+
+		printf("Hello World");
+
+		/*
+
+		if (ppsSearch == temp->PPS) {
+
+			printf("Please enter Patient Year Born\n");
+			scanf("%d", &temp->yearOfBirth);
+
+		}
+		*/
+
+		temp = temp->NEXT;
+
+	}
+
+
+}
+
 
 //VALIDATIONS
 //
 //
 //
 
-int searchList(struct node* top, char searchID[10])
+int searchList(struct node* top, int searchID)
 {
 	int found = 0;
 	struct node* temp = top;
 
 	while (temp != NULL)
 	{
-		if (strcmp(temp->ID, searchID) == 0)
+		if (temp->PPS == searchID)
 		{
 			found = 1;
 			return found;
@@ -605,14 +667,23 @@ float BMI(struct node* top,float w, float h)
 /*
 	By using the totals from BMI's
 	this function will produce the statistics of
-	% patients with specific BMI's
+	% patients with specific BMI's by their categories.
 
 */
 
-void GenerateStatistics(struct node* top,float w, float h)
+void GenerateStatistics(struct node* top)
 {
 
 	struct node* temp = top;
+	int patient = 0;
+	int count1 = 0;
+	int count2 = 0;
+	int count3 = 0;
+	int count4 = 0;
+	int percent1 = 0;
+	int percent2 = 0;
+	int percent3 = 0;
+	int percent4 = 0;
 
 	//clear screen
 	system("@cls||clear");
@@ -620,27 +691,45 @@ void GenerateStatistics(struct node* top,float w, float h)
 	printf("1) % Patients with less than 18.5 BMI.\n");
 	printf("2) % Patients with less than 25 BMI.\n");
 	printf("3) % Patients with less than 30 BMI.\n");
-	printf("4) % Patients with greater tahn 30 BMI.\n");
-	printf("5) % Patients with less than 18.5 BMI.\n\n");
+	printf("4) % Patients with greater than 30 BMI.\n");
 
 	printf("i) How many cigarettes you smoke a day.\n");
 	printf("ii) How often do you exercise.\n");
 
-	printf("\nPlease enter an option : ");
-	scanf("%d", &statsChoice);
 
-	switch (statsChoice)
-	{
+	while (temp!=NULL) {
+		if (temp->BMI <= 18.5) {
+			count1++;
+		}
+		else if (temp->BMI <= 25) {
+			count2++;
+		}
+		else if (temp->BMI <= 30) {
+			count3++;
+		}
+		else if (temp->BMI > 30) {
+			count4++;
+		}
 
-	case 1:
-	default:
-		break;
+		patient++;
+		temp = temp->NEXT;
 	}
+
+	//Calculating precentages
+	//
+	// less 18
+	percent1 = ((count1 / patient) * 100);
+	printf("\n\n1) Less than 18 BMI : %d %\n", percent1);
+
+	// less 25
+	percent2 = ((count2 / patient) * 100);
+	printf("1) Less than 25 BMI : %d %\n", percent2);
+
+	// less 30
+	percent3 = ((count3 / patient) * 100);
+	printf("1) Less than 30 BMI : %d %\n", percent3);
+
+	// greater 30
+	percent4 = ((count4 / patient) * 100);
+	printf("1) Greater than 30 BMI : %d %\n", percent4);
 }
-// STATISTICS FUNCTIONS FOR BMI
-/*
-void bmi18(float bmi)
-{
-	printf("%f", bmi);
-}
-*/
