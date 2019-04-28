@@ -10,3 +10,6 @@ Submission for Year 2 Semester 3 of Advanced Procedural Programming by Aaron Mor
 ## Built With
 * Visual Studio 2017
 * Atom 
+
+## License
+Licensed under the [MIT License](LICENSE).
